@@ -32,13 +32,17 @@ This ROS node reads joystick commands from the topic `joy_arm`, processes them, 
 
 ### Variables Used
 
-- `self.outbuff`: List containing processed joystick data before publishing.
+- `self.outbuff`: Temporary List containing processed joystick data before publishing .
 - `axes`: List of scaled joystick axes values.
 - `buttons`: List of calculated button states from joystick message.
-- `msg`: Instance of `std_msgs.Int32MultiArray` used for message creation.
+- `msg`: Instance of `std_msgs.Int32MultiArray` used for message creation. Later the data, layout are added and published to the topic 'stm_write'.
 
-### Detailed Explanation
+### Functions and Methods
 
-The `arm_drive` node initializes a ROS publisher and subscriber. It processes incoming joystick commands (`sensor_msgs/Joy`) in the `joyCallback` method, computes motor control values based on joystick axes and buttons, and publishes the results to `stm_write` using the `createMsg` method.
+- **`__init__`**: Initializes the node, setting up the publisher (`stm_write`) and subscriber (`joy_arm`).
+- **`joyCallback`**: Callback function that processes incoming joystick commands (`sensor_msgs/Joy`), computes motor control values and button states, and updates the output buffer (`self.outbuff`).
+- **`createMsg`**: Constructs a ROS message (`std_msgs.Int32MultiArray`) using the processed data from `self.outbuff`, configuring its layout and metadata.
+- **`run`**: Main execution loop that publishes the constructed ROS message (`std_msgs.Int32MultiArray`) at a specified rate (`50 Hz`).
+
 
 
