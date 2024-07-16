@@ -39,10 +39,10 @@ This ROS node reads joystick commands from the topic `joy_arm`, processes them, 
 
 ### Functions and Methods
 
-- **`__init__`**: Initializes the node, setting up the publisher (`stm_write`) and subscriber (`joy_arm`).
-- **`joyCallback`**: Callback function that processes incoming joystick commands (`sensor_msgs/Joy`), computes motor control values and button states, and updates the output buffer (`self.outbuff`).
-- **`createMsg`**: Constructs a ROS message (`std_msgs.Int32MultiArray`) using the processed data from `self.outbuff`, configuring its layout and metadata.
-- **`run`**: Main execution loop that publishes the constructed ROS message (`std_msgs.Int32MultiArray`) at a specified rate (`50 Hz`).
+- **`__init__`**: Initializes the node, setting up the publisher (`stm_write`) and subscriber (`joy_arm`). It also initializes the variable outbuff which is used to temporarily store the variables.
+- **`joyCallback`**: Callback function that processes incoming joystick message (`sensor_msgs/Joy`), computes motor control values and button states, and updates the output buffer (`self.outbuff`).In this function the axes and button values are normalised from '-255' to '255' .
+- **`createMsg`**: Constructs a ROS message (`std_msgs.Int32MultiArray`) using the processed data from `self.outbuff`, configuring its layout and metadata. And the label is named as'write'.
+- **`run`**: Main execution loop that publishes the constructed ROS message (`std_msgs.Int32MultiArray`) at a specified rate (`50 Hz`) when the ros master is functioning.
 
 
 
